@@ -9,7 +9,7 @@ find_package(Catch2 2 REQUIRED)
 # Jump to the library sources
 add_subdirectory(src)
 
-#Jump to the testing sources
+# Jump to the tests sources
 add_subdirectory(tests)
 
 # Setup CPack
