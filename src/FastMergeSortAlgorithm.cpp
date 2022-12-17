@@ -1,6 +1,8 @@
 #include "FastMergeSortAlgorithm.h"
 #include <iostream>
 
+// https://gist.github.com/kbendick/1de4f311e2a780339eb3
+
 void FastMergeSortAlgorithm::Merge(std::vector<int>& numbers_array,
                                    unsigned int      left_lower_index,
                                    unsigned int      left_upper_index,

@@ -3,9 +3,6 @@ project(FastMergeSort
         VERSION 0.1.0
         LANGUAGES CXX)
 
-# Add Catch2 testing library
-find_package(Catch2 2 REQUIRED)
-
 # Jump to the library sources
 add_subdirectory(src)
 
