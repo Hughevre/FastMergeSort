@@ -11,7 +11,7 @@
 
 TEST_CASE("Benchmark test", "[main]") {
     /* Create empty vectors to be sorted */
-    const unsigned int numbers_array_length = 500000;
+    const unsigned int numbers_array_length = 5000000;
     std::vector<int>   array_sorted_by_fms(numbers_array_length);
 
     /* Create some objects used in randomization */

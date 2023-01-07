@@ -8,7 +8,7 @@
 
 TEST_CASE("Negative numbers check", "[main]") {
     /* Create empty vectors to be sorted */
-    const unsigned int numbers_array_length = 500000;
+    const unsigned int numbers_array_length = 5000000;
     std::vector<int>   array_sorted_by_fms(numbers_array_length);
     std::vector<int>   array_sorted_by_std;
 
