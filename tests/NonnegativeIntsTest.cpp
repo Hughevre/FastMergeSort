@@ -1,6 +1,3 @@
-#define CATCH_CONFIG_MAIN
-#define CATCH_CONFIG_ENABLE_BENCHMARKING
-
 #include <memory>
 #include <algorithm>
 #include <random>
@@ -31,7 +28,7 @@ TEST_CASE("Nonnegative numbers check", "[main]") {
 
     SECTION("Correctness check for sequential imp.") {
         /* Sort the arrays using tho different methods */
-        test_ctx.RunPhase(array_sorted_by_fms, 0, array_sorted_by_fms.size()-1);
+        test_ctx.RunPhase(array_sorted_by_fms);
         std::sort(array_sorted_by_std.begin(), array_sorted_by_std.end());
 
         /* Compare the results */
@@ -45,23 +42,10 @@ TEST_CASE("Nonnegative numbers check", "[main]") {
     SECTION("Correctness check for OMP imp.") {
         /* Sort the arrays using tho different methods */
         test_ctx.SetAlgorithm(std::make_unique<FastMergeSortAlgorithmOMP>());
-        test_ctx.RunPhase(array_sorted_by_fms, 0, array_sorted_by_fms.size()-1);
+        test_ctx.RunPhase(array_sorted_by_fms);
         std::sort(array_sorted_by_std.begin(), array_sorted_by_std.end());
 
         /* Compare the results */
         REQUIRE(array_sorted_by_fms == array_sorted_by_std);
-    }
-
-    SECTION("Performance check") {
-        std::shuffle(array_sorted_by_fms.begin(), array_sorted_by_fms.end(), mersenne_engine);
-        std::shuffle(array_sorted_by_std.begin(), array_sorted_by_std.end(), mersenne_engine);
-
-        BENCHMARK("FastMergeSort implementation") {
-            test_ctx.RunPhase(array_sorted_by_fms, 0, array_sorted_by_fms.size()-1);
-        }; // <- SEMICOLON
-
-        BENCHMARK("STD library implementation") {
-            std::sort(array_sorted_by_std.begin(), array_sorted_by_std.end());
-        }; // <- SEMICOLON
     }
 }

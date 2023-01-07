@@ -10,9 +10,7 @@ class FastMergeSortAlgorithmTestCtx {
         explicit FastMergeSortAlgorithmTestCtx(std::unique_ptr<FastMergeSortAlgorithm>&& algorithm_flavour = {});
 
         void SetAlgorithm(std::unique_ptr<FastMergeSortAlgorithm>&& algorithm_flavour);
-        void RunPhase(std::vector<int>& numbers_array,
-                      unsigned int      left_index,
-                      unsigned int      right_index) const;
+        void RunPhase(std::vector<int>& numbers_array) const;
 
     private:
         /**

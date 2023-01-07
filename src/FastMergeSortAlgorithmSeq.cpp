@@ -1,7 +1,5 @@
 #include "FastMergeSortAlgorithmSeq.h"
 
-// https://gist.github.com/kbendick/1de4f311e2a780339eb3
-
 void FastMergeSortAlgorithmSeq::Merge(std::vector<int>& numbers_array,
                                       unsigned int      left_lower_index,
                                       unsigned int      left_upper_index,
@@ -30,30 +28,33 @@ void FastMergeSortAlgorithmSeq::Merge(std::vector<int>& numbers_array,
     }
 }
 
-/**
- * Sorts an array of integers using merge sort algorithm.
- *
- * The input array is passed by refernce, not by value.
- *
- * @param numbers_array Container whose values are to be sorted.
- * @param left_index    The beggining of the subarray that is to be sorted.
- * @param right_index   The end of the subarray that is to be sorted.
- */
-void FastMergeSortAlgorithmSeq::Sort(std::vector<int>& numbers_array, 
-                                     unsigned int      left_index, 
-                                     unsigned int      right_index) const {
+void FastMergeSortAlgorithmSeq::SortSubArray(std::vector<int>& numbers_array, 
+                                             unsigned int      left_index, 
+                                             unsigned int      right_index) const {
     if (right_index > left_index) {
         unsigned int middle_index = (left_index + right_index) / 2;
 
         /* Divide and sort the left subarray */
-        Sort(numbers_array, left_index, middle_index);
+        SortSubArray(numbers_array, left_index, middle_index);
 
         /* Divide and sort the right subarray */
-        Sort(numbers_array, middle_index+1, right_index);
+        SortSubArray(numbers_array, middle_index+1, right_index);
 
         /* Merge results into single array */
         Merge(numbers_array, left_index, middle_index, middle_index+1, right_index);
     }
 
     return;
+}
+
+/**
+ * Sorts an array of integers using merge sort algorithm.
+ *
+ * The input array is passed by refernce, not by value.
+ * The whole array is to be sorted.
+ *
+ * @param numbers_array Container whose values are to be sorted.
+ */
+void FastMergeSortAlgorithmSeq::Sort(std::vector<int>& numbers_array) const {
+    SortSubArray(numbers_array, 0, numbers_array.size()-1);
 }

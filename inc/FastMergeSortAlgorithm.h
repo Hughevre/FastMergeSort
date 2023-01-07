@@ -9,11 +9,13 @@
  */
 class FastMergeSortAlgorithm {
     public:
-        virtual void Sort(std::vector<int>& numbers_array, 
-                          unsigned int      left_index, 
-                          unsigned int      right_index) const = 0;
+        virtual void Sort(std::vector<int>& numbers_array) const = 0;
 
     protected:
+        virtual void SortSubArray(std::vector<int>& numbers_array, 
+                                  unsigned int      left_index, 
+                                  unsigned int      right_index) const = 0;
+
         virtual void Merge(std::vector<int>& numbers_array,
                            unsigned int      left_lower_index, 
                            unsigned int      left_upper_index, 

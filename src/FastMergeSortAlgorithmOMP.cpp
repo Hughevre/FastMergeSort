@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <omp.h>
 #include "FastMergeSortAlgorithmOMP.h"
 
@@ -29,33 +30,46 @@ void FastMergeSortAlgorithmOMP::Merge(std::vector<int>& numbers_array,
     }
 }
 
+void FastMergeSortAlgorithmOMP::SortSubArray(std::vector<int>& numbers_array, 
+                                             unsigned int      left_index, 
+                                             unsigned int      right_index) const {
+    if (right_index > left_index) {
+        if (right_index - left_index >= 32) {
+            unsigned int middle_index = (left_index + right_index) / 2;
+
+            #pragma omp taskgroup
+            {
+                /* Divide and sort the left subarray */
+                #pragma omp task shared(numbers_array) untied if(right_index-left_index >= (1<<14))
+                SortSubArray(numbers_array, left_index, middle_index);
+
+                /* Divide and sort the right subarray */
+                #pragma omp task shared(numbers_array) untied if(right_index-left_index >= (1<<14))
+                SortSubArray(numbers_array, middle_index+1, right_index);
+
+                #pragma omp taskyield
+            }
+
+            /* Merge results into single array */
+            Merge(numbers_array, left_index, middle_index, middle_index+1, right_index);
+        } else {
+            /* STL library sorting function used for simplicy. May be replaces by insert sort custom implemetnation */
+            std::sort(numbers_array.begin()+left_index, numbers_array.begin()+right_index+1);
+        }
+    }
+
+    return;
+}
+
 /**
  * Sorts an array of integers using merge sort algorithm.
  *
  * The input array is passed by refernce, not by value.
  *
  * @param numbers_array Container whose values are to be sorted.
- * @param left_index    The beggining of the subarray that is to be sorted.
- * @param right_index   The end of the subarray that is to be sorted.
  */
-void FastMergeSortAlgorithmOMP::Sort(std::vector<int>& numbers_array, 
-                                     unsigned int      left_index, 
-                                     unsigned int      right_index) const {
-    if (right_index > left_index) {
-        unsigned int middle_index = (left_index + right_index) / 2;
-
-        /* Divide and sort the left subarray */
-        //#pragma omp task
-        Sort(numbers_array, left_index, middle_index);
-
-        /* Divide and sort the right subarray */
-        //#pragma omp task
-        Sort(numbers_array, middle_index+1, right_index);
-
-        /* Merge results into single array */
-        //#pragma omp taskwait
-        Merge(numbers_array, left_index, middle_index, middle_index+1, right_index);
-    }
-
-    return;
+void FastMergeSortAlgorithmOMP::Sort(std::vector<int>& numbers_array) const {
+    #pragma omp parallel
+    #pragma omp single
+    SortSubArray(numbers_array, 0, numbers_array.size()-1);
 }

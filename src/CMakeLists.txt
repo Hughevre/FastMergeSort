@@ -2,6 +2,7 @@
 file(GLOB sources_list CONFIGURE_DEPENDS "*.cpp")
 
 # Make an automatic library - will be static or dynamic based on user setting
+add_compile_definitions(DEBUG)
 add_library(libfastmergesort SHARED ${sources_list})
 
 # Add OpenMP library

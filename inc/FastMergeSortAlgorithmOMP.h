@@ -10,11 +10,13 @@
  */
 class FastMergeSortAlgorithmOMP : public FastMergeSortAlgorithm {
     public:
-        void Sort(std::vector<int>& numbers_array, 
-                  unsigned int      left_index, 
-                  unsigned int      right_index) const override;
+        void Sort(std::vector<int>& numbers_array) const override;
 
     private:
+        void SortSubArray(std::vector<int>& numbers_array, 
+                          unsigned int      left_index, 
+                          unsigned int      right_index) const override;
+
         void Merge(std::vector<int>& numbers_array,
                    unsigned int      left_lower_index, 
                    unsigned int      left_upper_index, 

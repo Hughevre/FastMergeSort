@@ -21,17 +21,13 @@ void FastMergeSortAlgorithmTestCtx::SetAlgorithm(std::unique_ptr<FastMergeSortAl
  * Does the main work.
  * 
  * @param numbers_array Container whose values are to be sorted.
- * @param left_index    The beggining of the subarray that is to be sorted.
- * @param right_index   The end of the subarray that is to be sorted.
  */
-void FastMergeSortAlgorithmTestCtx::RunPhase(std::vector<int>& numbers_array,
-                                             unsigned int      left_index,
-                                             unsigned int      right_index) const {
+void FastMergeSortAlgorithmTestCtx::RunPhase(std::vector<int>& numbers_array) const {
     if (!algorithm_flavour_) {
         std::cout << "[ERROR] The specific algorithm type has not been set!" << std::endl;
         return;
     }
 
-    algorithm_flavour_->Sort(numbers_array, left_index, right_index);
+    algorithm_flavour_->Sort(numbers_array);
 }
 

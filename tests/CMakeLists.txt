@@ -3,7 +3,12 @@ find_package(Catch2 2 REQUIRED)
 
 # Tests need to be added as executables first
 set(EXECUTABLE_NAME "FMSTests")
-add_executable(${EXECUTABLE_NAME} FastMergeSortAlgorithmTestCtx.cpp IntegersTest.cpp)
+add_executable(
+    ${EXECUTABLE_NAME} 
+    FastMergeSortAlgorithmTestCtx.cpp 
+    NonnegativeIntsTest.cpp
+    NegativeIntsTest.cpp
+    PerformanceTest.cpp)
 
 # Include specific directory, so the compiler knows where to seek for header files
 target_include_directories(${EXECUTABLE_NAME} PUBLIC ./)
