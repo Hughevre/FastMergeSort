@@ -1,3 +1,4 @@
+#include <omp.h>
 #include "FastMergeSortAlgorithmOMP.h"
 
 void FastMergeSortAlgorithmOMP::Merge(std::vector<int>& numbers_array,

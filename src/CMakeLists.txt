@@ -8,6 +8,7 @@ add_library(libfastmergesort SHARED ${sources_list})
 find_package(OpenMP)
 if(OpenMP_CXX_FOUND)
     target_link_libraries(libfastmergesort PUBLIC OpenMP::OpenMP_CXX)
+    set(CMAKE_CXX_FLAGS "-fopenmp")
 endif()
 
 # Include specific directory, so the compiler knows where to seek for header files
