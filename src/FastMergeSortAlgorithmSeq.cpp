@@ -1,13 +1,12 @@
-#include "FastMergeSortAlgorithm.h"
-#include <iostream>
+#include "FastMergeSortAlgorithmSeq.h"
 
 // https://gist.github.com/kbendick/1de4f311e2a780339eb3
 
-void FastMergeSortAlgorithm::Merge(std::vector<int>& numbers_array,
-                                   unsigned int      left_lower_index,
-                                   unsigned int      left_upper_index,
-                                   unsigned int      right_lower_index,
-                                   unsigned int      right_upper_index) {
+void FastMergeSortAlgorithmSeq::Merge(std::vector<int>& numbers_array,
+                                      unsigned int      left_lower_index,
+                                      unsigned int      left_upper_index,
+                                      unsigned int      right_lower_index,
+                                      unsigned int      right_upper_index) const {
     unsigned int length = right_upper_index - left_lower_index + 1;
     unsigned int left   = left_lower_index;
     unsigned int right  = right_lower_index;
@@ -40,9 +39,9 @@ void FastMergeSortAlgorithm::Merge(std::vector<int>& numbers_array,
  * @param left_index    The beggining of the subarray that is to be sorted.
  * @param right_index   The end of the subarray that is to be sorted.
  */
-void FastMergeSortAlgorithm::Sort(std::vector<int>& numbers_array, 
-                                  unsigned int      left_index, 
-                                  unsigned int      right_index) {
+void FastMergeSortAlgorithmSeq::Sort(std::vector<int>& numbers_array, 
+                                     unsigned int      left_index, 
+                                     unsigned int      right_index) const {
     if (right_index > left_index) {
         unsigned int middle_index = (left_index + right_index) / 2;
 
