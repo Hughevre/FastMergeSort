@@ -3,10 +3,10 @@ find_package(Catch2 2 REQUIRED)
 
 # Tests need to be added as executables first
 set(EXECUTABLE_NAME "FMSTests")
-add_executable(${EXECUTABLE_NAME} IntegersTest.cpp)
+add_executable(${EXECUTABLE_NAME} FastMergeSortAlgorithmTestCtx.cpp IntegersTest.cpp)
 
-# The compiler has to use C++ 17 to compile the tests sources
-target_compile_features(${EXECUTABLE_NAME} PRIVATE cxx_std_17)
+# Include specific directory, so the compiler knows where to seek for header files
+target_include_directories(${EXECUTABLE_NAME} PUBLIC ./)
 
 # Add support for the code coverage
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/cmake_modules)
@@ -26,5 +26,4 @@ target_link_libraries(${EXECUTABLE_NAME} PRIVATE libfastmergesort Catch2::Catch2
 # Register Catch2-based tests in CMake build system
 include(CTest)
 include(Catch)
-enable_testing()
 catch_discover_tests(${EXECUTABLE_NAME})

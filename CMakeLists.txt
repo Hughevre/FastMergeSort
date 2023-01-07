@@ -1,12 +1,15 @@
 cmake_minimum_required(VERSION 3.0.0)
 project(FastMergeSort 
-        VERSION 0.1.0
+        VERSION 1.0.0
         LANGUAGES CXX)
+
+set(CMAKE_CXX_STANDARD 17)
 
 # Jump to the library sources
 add_subdirectory(src)
 
 # Jump to the tests sources
+enable_testing()
 add_subdirectory(tests)
 
 # Setup CPack
