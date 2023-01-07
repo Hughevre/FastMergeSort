@@ -7,6 +7,7 @@
 #include <catch2/catch.hpp>
 #include "FastMergeSortAlgorithmTestCtx.h"
 #include "../inc/FastMergeSortAlgorithmSeq.h"
+#include "../inc/FastMergeSortAlgorithmOMP.h"
 
 TEST_CASE("Nonnegative numbers check", "[main]") {
     /* Create empty vectors to be sorted */
@@ -28,11 +29,25 @@ TEST_CASE("Nonnegative numbers check", "[main]") {
     std::generate(array_sorted_by_fms.begin(), array_sorted_by_fms.end(), [&]{ return u_distribution(mersenne_engine); });
     array_sorted_by_std = array_sorted_by_fms;
 
-    /* Sort the arrays using tho different methods */
-    test_ctx.RunPhase(array_sorted_by_fms, 0, array_sorted_by_fms.size()-1);
-    std::sort(array_sorted_by_std.begin(), array_sorted_by_std.end());
+    SECTION("Correctness check for sequential imp.") {
+        /* Sort the arrays using tho different methods */
+        test_ctx.RunPhase(array_sorted_by_fms, 0, array_sorted_by_fms.size()-1);
+        std::sort(array_sorted_by_std.begin(), array_sorted_by_std.end());
 
-    SECTION("Correctness check") {
+        /* Compare the results */
+        REQUIRE(array_sorted_by_fms == array_sorted_by_std);
+    }
+
+    /* Shuffle both arrays so that they are ready for new play */
+    std::shuffle(array_sorted_by_fms.begin(), array_sorted_by_fms.end(), mersenne_engine);
+    array_sorted_by_std = array_sorted_by_fms;
+
+    SECTION("Correctness check for OMP imp.") {
+        /* Sort the arrays using tho different methods */
+        test_ctx.SetAlgorithm(std::make_unique<FastMergeSortAlgorithmOMP>());
+        test_ctx.RunPhase(array_sorted_by_fms, 0, array_sorted_by_fms.size()-1);
+        std::sort(array_sorted_by_std.begin(), array_sorted_by_std.end());
+
         /* Compare the results */
         REQUIRE(array_sorted_by_fms == array_sorted_by_std);
     }
